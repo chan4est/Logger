@@ -1,19 +1,48 @@
-var execProcess = require("./exec_process.js");
+const execProcess = require("./exec_process.js");
+const express = require('express');
+
+const app = express();
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/myform', async (req, res) => {
+  const myText = req.query.mytext; //mytext is the name of your input box
+  var result = await start(myText);
+  // console.log(result);
+  result = result.replace(/(?:\r\n|\r|\n)/g, '<br>');
+  console.log(result);
+  res.send('Your Text: ' + result);
+});
+
+
 
 function start(repo) {
   var git = repo.substring(repo.lastIndexOf('/') + 1);
   const dir = git.substring(0, git.length - 4);
   const cmd = "sh ./git.sh " + repo + " " + dir;
-  execProcess.result(cmd, function (err, response) {
-    if (!err) {
-      console.log(response);
-      return (response)
-    } else {
-      console.log(err);
-    }
-  });
+
+  return new Promise(function (resolve, reject) {
+    execProcess.result(cmd, (err, resp, body) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(resp);
+      }
+    })
+  })
 }
 
-start('https://github.com/domharrington/node-gitlog.git')
+// execProcess.result(cmd, function (err, response) {
+//   if (!err) {
+//     console.log(response);
+//   } else {
+//     console.log(err);
+//   }
+// });
+// }
+
+app.listen(3000)
 
 // host deploy script

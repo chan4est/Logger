@@ -15,7 +15,6 @@ function parseOutput(output) {
 }
 
 var result = function (command, cb) {
-  console.log(command)
   var child = exec(command, function (err, stdout, stderr) {
     if (err != null) {
       return cb(new Error(err), null);
