@@ -8,11 +8,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/myform', async (req, res) => {
-  const myText = req.query.mytext; //mytext is the name of your input box
-  var result = await start(myText);
-  // console.log(result);
+  const text = req.query.text;
+  var result = await start(text);
   result = result.replace(/(?:\r\n|\r|\n)/g, '<br>');
-  console.log(result);
+  // console.log(result);
   res.send('Your Text: ' + result);
 });
 
