@@ -16,8 +16,6 @@ app.get('/myform', async (req, res) => {
   res.send('Your Text: ' + result);
 });
 
-
-
 function start(repo) {
   var git = repo.substring(repo.lastIndexOf('/') + 1);
   const dir = git.substring(0, git.length - 4);
@@ -33,15 +31,6 @@ function start(repo) {
     })
   })
 }
-
-// execProcess.result(cmd, function (err, response) {
-//   if (!err) {
-//     console.log(response);
-//   } else {
-//     console.log(err);
-//   }
-// });
-// }
 
 app.listen(3000)
 
