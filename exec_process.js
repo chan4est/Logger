@@ -15,7 +15,7 @@ function parseOutput(output) {
 }
 
 var result = function (command, cb) {
-  var child = exec(command, function (err, stdout, stderr) {
+  exec(command, { maxBuffer: 10000 * 1024 }, (err, stdout, stderr) => {
     if (err != null) {
       return cb(new Error(err), null);
     } else if (typeof (stderr) != "string") {
